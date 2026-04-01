@@ -1,5 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
+
+const ease = [0.16, 1, 0.3, 1] as const;
+
 interface ImagePlaceholderProps {
   className?: string;
   aspectRatio?: string;
@@ -16,27 +20,37 @@ export default function ImagePlaceholder({
       className={`img-placeholder relative overflow-hidden ${className}`}
       style={{ aspectRatio }}
     >
-      {/* Elegant gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-charcoal via-brand-black to-brand-charcoal" />
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-rose-deep/10 via-transparent to-brand-rose/5" />
+      {/* Luminous light gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-pearl via-brand-ivory to-brand-champagne" />
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-sand/20 via-transparent to-brand-white/60" />
 
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: "radial-gradient(circle at 1px 1px, rgba(212,160,160,0.5) 1px, transparent 0)",
-        backgroundSize: "24px 24px",
-      }} />
+      {/* Animated shimmer */}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%)",
+        }}
+        animate={{ x: ["-100%", "100%"] }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          repeatDelay: 2,
+          ease,
+        }}
+      />
 
       {/* Centered watermark */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="font-display text-2xl tracking-[0.3em] text-brand-rose/20 select-none uppercase">
-          ELUA
+        <span className="font-display text-3xl tracking-[0.3em] text-brand-sand/60 select-none uppercase">
+          ÉLUA
         </span>
       </div>
 
       {/* Optional label */}
       {label && (
         <div className="absolute bottom-0 inset-x-0 p-4">
-          <p className="font-body text-xs tracking-widest uppercase text-brand-muted/60 text-center">
+          <p className="font-body text-[10px] tracking-widest uppercase text-brand-taupe/50 text-center">
             {label}
           </p>
         </div>

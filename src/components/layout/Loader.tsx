@@ -15,14 +15,14 @@ export default function Loader({ isLoading }: LoaderProps) {
         <motion.div
           key="loader"
           initial={{ opacity: 1, y: "0%" }}
-          exit={{ y: "-100%", transition: { duration: 0.8, delay: 0.1, ease } }}
-          className="fixed inset-0 z-[100] bg-brand-black flex flex-col items-center justify-center"
+          exit={{ opacity: 0, y: "-100%", transition: { duration: 0.8, delay: 0.1, ease } }}
+          className="fixed inset-0 z-[100] bg-brand-snow flex flex-col items-center justify-center"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease }}
-            className="font-display text-display-md tracking-[0.4em] uppercase text-brand-white"
+            className="font-display text-4xl md:text-5xl tracking-[0.4em] uppercase text-brand-ink"
           >
             ÉLUA
           </motion.h1>
@@ -31,7 +31,7 @@ export default function Loader({ isLoading }: LoaderProps) {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1, delay: 0.6, ease }}
-            className="mt-6 h-px w-24 bg-brand-rose origin-center"
+            className="mt-6 h-px w-24 bg-brand-blush origin-center"
           />
         </motion.div>
       )}

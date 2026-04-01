@@ -5,6 +5,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import ImagePlaceholder from "./ImagePlaceholder";
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 interface ParallaxImageProps {
   src?: string;
   alt?: string;
@@ -17,7 +19,7 @@ export default function ParallaxImage({
   src,
   alt = "",
   className = "",
-  speed = 0.2,
+  speed = 0.15,
   aspectRatio = "3/4",
 }: ParallaxImageProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -28,18 +30,25 @@ export default function ParallaxImage({
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [`-${speed * 100}%`, `${speed * 100}%`]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [`-${speed * 100}%`, `${speed * 100}%`]
+  );
 
   const showImage = src && !imgError;
 
   return (
     <div
       ref={ref}
-      className={`relative overflow-hidden ${className}`}
+      className={`relative overflow-hidden rounded-sm ${className}`}
       style={{ aspectRatio }}
     >
       {showImage ? (
-        <motion.div className="absolute inset-[-20%]" style={{ y }}>
+        <motion.div
+          className="absolute inset-0"
+          style={{ y, scale: 1.15 }}
+        >
           <Image
             src={src}
             alt={alt}

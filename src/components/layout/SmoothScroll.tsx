@@ -22,7 +22,6 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
 
     const frameId = requestAnimationFrame(raf);
 
-    // Add classes to html element
     const html = document.documentElement;
     html.classList.add("lenis", "lenis-smooth");
 

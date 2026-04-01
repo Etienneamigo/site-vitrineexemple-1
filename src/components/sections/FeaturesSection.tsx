@@ -1,78 +1,52 @@
 "use client";
 
 import FadeIn from "@/components/ui/FadeIn";
-import RevealText from "@/components/ui/RevealText";
 
 const features = [
   {
-    number: "01",
+    num: "01",
     title: "Second Skin",
-    description:
-      "Engineered fabrics that mold to your body, offering compression where you need it and freedom where you want it.",
+    desc: "Engineered fabrics that mold to your body, offering compression where you need it and freedom where you crave it.",
   },
   {
-    number: "02",
+    num: "02",
     title: "Sculpted Lines",
-    description:
-      "Architectural seaming that follows the natural contours of the body, creating a silhouette that flatters every shape.",
+    desc: "Architectural seaming that follows the natural contours of the body, creating a silhouette that flatters and empowers.",
   },
   {
-    number: "03",
+    num: "03",
     title: "Silent Performance",
-    description:
-      "Advanced moisture-wicking technology and four-way stretch that works invisibly, so you can focus on what matters.",
+    desc: "Advanced moisture-wicking technology and four-way stretch that works invisibly, so you can focus on what matters.",
   },
   {
-    number: "04",
+    num: "04",
     title: "Timeless Design",
-    description:
-      "Pieces that transcend trends. Designed to be as relevant tomorrow as they are today.",
+    desc: "Pieces that transcend seasons. Designed to be as relevant tomorrow as they are today.",
   },
 ];
 
 export default function FeaturesSection() {
   return (
-    <section className="relative bg-brand-black py-32 md:py-48 px-8 md:px-16 lg:px-24">
-      {/* Section label */}
-      <FadeIn delay={0} direction="up" distance={20}>
-        <p className="font-body text-xs uppercase tracking-[0.3em] text-brand-rose mb-16 md:mb-24">
+    <section className="relative bg-brand-snow py-32 md:py-48 px-8 md:px-16 lg:px-24">
+      <FadeIn delay={0} direction="up" distance={15}>
+        <p className="text-xs tracking-[0.3em] uppercase text-brand-rose mb-16 font-body">
           03 — Craftsmanship
         </p>
       </FadeIn>
 
-      {/* Features grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-0">
-        {features.map((feature, i) => (
-          <FadeIn
-            key={feature.number}
-            delay={0.1 + i * 0.15}
-            direction="up"
-            distance={30}
-          >
-            <div
-              className={`relative ${
-                i < features.length - 1
-                  ? "lg:border-r lg:border-brand-rose/10"
-                  : ""
-              } lg:px-8 first:lg:pl-0 last:lg:pr-0`}
-            >
-              {/* Number */}
-              <p className="font-display text-4xl md:text-5xl text-gradient-rose mb-6 tracking-[-0.02em]">
-                {feature.number}
-              </p>
-
-              {/* Title */}
-              <RevealText
-                as="h3"
-                className="font-display text-xl md:text-2xl text-brand-white mb-4"
-                delay={0.2 + i * 0.15}
-              >
-                {feature.title}
-              </RevealText>
-
-              {/* Description */}
-              <p className="font-body text-sm leading-relaxed text-brand-muted">
-                {feature.description}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8">
+        {features.map((f, i) => (
+          <FadeIn key={f.num} delay={0.1 + i * 0.12} direction="up" distance={35}>
+            <div>
+              <div className="h-px w-12 bg-brand-blush mb-8" />
+              <span className="font-display text-5xl md:text-6xl text-gradient-warm block mb-6">
+                {f.num}
+              </span>
+              <h3 className="font-display text-xl md:text-2xl text-brand-ink mb-4">
+                {f.title}
+              </h3>
+              <p className="text-brand-stone text-sm leading-[1.7] font-body">
+                {f.desc}
               </p>
             </div>
           </FadeIn>

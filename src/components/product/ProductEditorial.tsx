@@ -6,29 +6,32 @@ import FadeIn from "@/components/ui/FadeIn";
 import RevealText from "@/components/ui/RevealText";
 import type { Product } from "@/data/products";
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 interface ProductEditorialProps {
   product: Product;
 }
 
 const editorialCopy: Record<string, string> = {
-  "la-veste-studio":
-    "Engineered for the studio. Refined for the world. The silhouette that defines a new era of active elegance.",
-  "le-pantalon-flow":
-    "From first pose to final breath, these are the lines that move with intention. Precision, meet flow.",
+  jacket:
+    "Engineered for the studio. Refined for the world. A silhouette that defines a new era of active elegance.",
+  pants:
+    "From first pose to final breath. Precision meets flow in every line, every seam, every movement.",
 };
 
 export default function ProductEditorial({ product }: ProductEditorialProps) {
-  const backgroundImage = product.colors[0]?.images[1] ?? product.colors[0]?.images[0];
+  const backgroundImage =
+    product.colors[0]?.images[1] ?? product.colors[0]?.images[0];
   const editorial = editorialCopy[product.slug] ?? product.description;
 
   return (
-    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-      {/* Parallax Background */}
+    <section className="relative min-h-[70vh] flex items-end overflow-hidden">
+      {/* Background Image */}
       <motion.div
         className="absolute inset-0"
-        initial={{ scale: 1.1 }}
+        initial={{ scale: 1.08 }}
         whileInView={{ scale: 1 }}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.6, ease }}
         viewport={{ once: true }}
       >
         {backgroundImage && (
@@ -42,23 +45,21 @@ export default function ProductEditorial({ product }: ProductEditorialProps) {
         )}
       </motion.div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/70 to-brand-black/40" />
+      {/* Gradient Overlay — light from bottom */}
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-snow/90 via-brand-snow/40 to-transparent" />
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 md:px-12 lg:px-24 max-w-4xl mx-auto py-32">
+      {/* Content — bottom-left */}
+      <div className="relative z-10 px-8 md:px-16 lg:px-24 pb-16 md:pb-24 max-w-2xl">
         <RevealText
           as="p"
-          className="text-display-lg font-display text-brand-light mb-8"
+          className="font-display text-3xl md:text-5xl text-brand-ink leading-[1.1] mb-6"
           delay={0.2}
         >
           {product.tagline}
         </RevealText>
 
         <FadeIn delay={0.5} direction="up" once>
-          <p className="text-body-lg font-body text-brand-silver leading-relaxed max-w-2xl mx-auto">
-            {editorial}
-          </p>
+          <p className="text-brand-stone text-base">{editorial}</p>
         </FadeIn>
       </div>
     </section>

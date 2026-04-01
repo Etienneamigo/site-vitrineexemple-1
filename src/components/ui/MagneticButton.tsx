@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef, useState, ReactNode } from "react";
+import { useRef, ReactNode } from "react";
 import { motion, useSpring } from "framer-motion";
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 interface MagneticButtonProps {
   children: ReactNode;
@@ -12,12 +14,11 @@ interface MagneticButtonProps {
 export default function MagneticButton({
   children,
   className = "",
-  strength = 0.3,
+  strength = 0.25,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState(false);
 
-  const springConfig = { stiffness: 200, damping: 20, mass: 0.5 };
+  const springConfig = { stiffness: 180, damping: 18, mass: 0.4 };
   const x = useSpring(0, springConfig);
   const y = useSpring(0, springConfig);
 
@@ -26,20 +27,13 @@ export default function MagneticButton({
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const deltaX = (e.clientX - centerX) * strength;
-    const deltaY = (e.clientY - centerY) * strength;
-    x.set(deltaX);
-    y.set(deltaY);
+    x.set((e.clientX - centerX) * strength);
+    y.set((e.clientY - centerY) * strength);
   };
 
   const handleMouseLeave = () => {
-    setHovered(false);
     x.set(0);
     y.set(0);
-  };
-
-  const handleMouseEnter = () => {
-    setHovered(true);
   };
 
   return (
@@ -48,9 +42,10 @@ export default function MagneticButton({
       className={className}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onMouseEnter={handleMouseEnter}
     >
-      <motion.div style={{ x, y }}>{children}</motion.div>
+      <motion.div style={{ x, y }}>
+        {children}
+      </motion.div>
     </div>
   );
 }

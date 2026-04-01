@@ -3,6 +3,8 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 interface FadeInProps {
   children: ReactNode;
   className?: string;
@@ -18,8 +20,8 @@ export default function FadeIn({
   className = "",
   delay = 0,
   direction = "up",
-  distance = 40,
-  duration = 0.8,
+  distance = 50,
+  duration = 1,
   once = true,
 }: FadeInProps) {
   const directionOffset = {
@@ -37,11 +39,11 @@ export default function FadeIn({
       className={className}
       initial={{ opacity: 0, x, y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once, margin: "-10%" }}
+      viewport={{ once, margin: "-15%" }}
       transition={{
         duration,
         delay,
-        ease: [0.16, 1, 0.3, 1],
+        ease,
       }}
     >
       {children}

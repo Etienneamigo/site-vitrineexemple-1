@@ -1,5 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
+
+const ease = [0.16, 1, 0.3, 1] as const;
+
 interface MarqueeBandProps {
   text: string;
   speed?: number;
@@ -9,11 +13,10 @@ interface MarqueeBandProps {
 
 export default function MarqueeBand({
   text,
-  speed = 30,
+  speed = 40,
   className = "",
-  separator = "  \u00b7  ",
+  separator = " · ",
 }: MarqueeBandProps) {
-  // Repeat text enough times to fill wide screens
   const repeats = 12;
   const content = Array.from({ length: repeats })
     .map(() => text + separator)
@@ -21,17 +24,17 @@ export default function MarqueeBand({
 
   return (
     <div
-      className={`relative overflow-hidden border-y border-brand-rose/20 bg-brand-black ${className}`}
+      className={`relative overflow-hidden border-y border-brand-sand/40 bg-brand-ivory/50 ${className}`}
     >
       <div className="flex whitespace-nowrap py-4">
         <div
-          className="animate-marquee flex-shrink-0 font-body text-xs uppercase tracking-[0.25em] text-brand-rose-light/70"
+          className="animate-marquee flex-shrink-0 font-body text-sm uppercase tracking-[0.25em] text-brand-taupe"
           style={{ animationDuration: `${speed}s` }}
         >
           {content}
         </div>
         <div
-          className="animate-marquee flex-shrink-0 font-body text-xs uppercase tracking-[0.25em] text-brand-rose-light/70"
+          className="animate-marquee flex-shrink-0 font-body text-sm uppercase tracking-[0.25em] text-brand-taupe"
           style={{ animationDuration: `${speed}s` }}
           aria-hidden
         >

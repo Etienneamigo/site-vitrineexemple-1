@@ -1,48 +1,114 @@
 "use client";
 
+import { useState, useCallback } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeIn from "@/components/ui/FadeIn";
-import ParallaxImage from "@/components/ui/ParallaxImage";
+import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 interface ProductGalleryProps {
   images: string[];
   productName: string;
 }
 
-export default function ProductGallery({ images, productName }: ProductGalleryProps) {
+function GalleryImage({
+  src,
+  alt,
+  aspectRatio,
+  index,
+}: {
+  src: string;
+  alt: string;
+  aspectRatio: string;
+  index: number;
+}) {
+  const [hasError, setHasError] = useState(false);
+
+  const handleError = useCallback(() => {
+    setHasError(true);
+  }, []);
+
+  if (hasError) {
+    return (
+      <ImagePlaceholder
+        className="w-full rounded-sm"
+        aspectRatio={aspectRatio}
+        label={alt}
+      />
+    );
+  }
+
   return (
-    <section className="px-6 md:px-12 lg:px-24 py-24 md:py-32">
+    <FadeIn delay={index * 0.12} direction="up" once>
+      <motion.div
+        className="overflow-hidden rounded-sm bg-brand-pearl"
+        style={{ aspectRatio }}
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.7, ease }}
+      >
+        <div className="relative w-full h-full">
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            onError={handleError}
+          />
+        </div>
+      </motion.div>
+    </FadeIn>
+  );
+}
+
+export default function ProductGallery({
+  images,
+  productName,
+}: ProductGalleryProps) {
+  if (!images || images.length === 0) return null;
+
+  const [firstImage, ...restImages] = images;
+
+  return (
+    <section className="py-16 md:py-24 px-8 md:px-16 lg:px-24 bg-brand-snow">
       <FadeIn direction="up" once>
-        <p className="text-caption font-body text-brand-muted uppercase tracking-widest mb-10">
+        <p className="text-xs uppercase tracking-[0.3em] text-brand-taupe mb-10">
           Gallery
         </p>
       </FadeIn>
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={images[0]}
+          key={firstImage}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+          transition={{ duration: 0.4, ease }}
         >
-          {images.map((src, index) => (
-            <FadeIn key={src} delay={index * 0.1} direction="up" once>
-              <motion.div
-                className="overflow-hidden rounded-sm"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <ParallaxImage
+          {/* First image — full width hero */}
+          <GalleryImage
+            src={firstImage}
+            alt={`${productName} — Image 1`}
+            aspectRatio="16/9"
+            index={0}
+          />
+
+          {/* Remaining images — 2-column grid */}
+          {restImages.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-6">
+              {restImages.map((src, index) => (
+                <GalleryImage
+                  key={src}
                   src={src}
-                  alt={`${productName} — Image ${index + 1}`}
+                  alt={`${productName} — Image ${index + 2}`}
                   aspectRatio="3/4"
-                  speed={0.15}
+                  index={index + 1}
                 />
-              </motion.div>
-            </FadeIn>
-          ))}
+              ))}
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </section>

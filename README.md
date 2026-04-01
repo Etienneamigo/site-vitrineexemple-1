@@ -2,6 +2,8 @@
 
 Site vitrine premium pour une marque fictive d'activewear pilates. Next.js + TypeScript + Tailwind CSS + Framer Motion.
 
+Direction artistique : lumineux, blanc, aérien, sophistiqué, premium.
+
 ---
 
 ## Installation
@@ -34,106 +36,82 @@ src/
   app/
     layout.tsx            # Layout racine (navigation, footer, smooth scroll)
     page.tsx              # Page d'accueil
-    globals.css           # Styles globaux, couleurs, animations
+    globals.css           # Styles globaux, palette lumineuse, animations
     product/
       jacket/page.tsx     # Page produit Veste
       pants/page.tsx      # Page produit Pantalon
   components/
-    layout/               # Navigation, Footer, SmoothScroll, Loader, PageTransition
-    sections/             # Sections de la page d'accueil (Hero, Intro, Manifesto...)
-    product/              # Composants produit (Hero, Gallery, Details, Editorial...)
-    ui/                   # Composants UI (FadeIn, RevealText, ParallaxImage, MarqueeBand...)
+    layout/               # Navigation, Footer, SmoothScroll, Loader
+    sections/             # Sections homepage (Hero, Intro, Manifesto, Features, etc.)
+    product/              # Composants produit (Hero, Gallery, Details, Editorial, etc.)
+    ui/                   # Composants UI (FadeIn, RevealText, ParallaxImage, etc.)
   data/
-    products.ts           # Donnees produits (noms, descriptions, coloris, images)
+    products.ts           # Données produits (noms, descriptions, coloris, images)
   hooks/                  # Hooks custom (useInView, useScrollProgress)
   lib/
     utils.ts              # Fonctions utilitaires
-public/
+
+public/images/
+  outfits/                # Images portées (looks complets)
+    outfit-black-front.png
+    outfit-rose-front.png
+    outfit-rose-back.png
   products/
-    jacket/
-      black/              # 1.jpg, 2.jpg, 3.jpg, 4.jpg
-      pink/               # 1.jpg, 2.jpg, 3.jpg, 4.jpg
-    pants/
-      black/              # 1.jpg, 2.jpg, 3.jpg, 4.jpg
-      pink/               # 1.jpg, 2.jpg, 3.jpg, 4.jpg
+    jacket/               # Images produit fond blanc
+      jacket-black-front.avif
+      jacket-black-back.avif
+      jacket-rose-front.avif
+      jacket-rose-back.avif
+    pants/                # (optionnel, dossier prêt)
 ```
 
 ---
 
-## Remplacer les images
+## Intégrer vos images
 
-Placez vos images dans les dossiers correspondants :
+Copiez vos images sources dans les dossiers ci-dessus avec les noms exacts.
 
-```
-public/products/jacket/black/1.jpg   # Image principale veste noire
-public/products/jacket/black/2.jpg   # etc.
-public/products/jacket/pink/1.jpg    # Image principale veste rose
-public/products/pants/black/1.jpg    # Image principale pantalon noir
-public/products/pants/pink/1.jpg     # Image principale pantalon rose
-```
+Correspondance avec vos fichiers :
 
-Les images sont chargees automatiquement par le code. Pas besoin de modifier le code pour changer les visuels.
+| Fichier source | Destination |
+|---|---|
+| imageenssemble noir porté de face.png | `public/images/outfits/outfit-black-front.png` |
+| imageenssembleroseporté de face.png | `public/images/outfits/outfit-rose-front.png` |
+| imageemssembleroseporté de dos.png | `public/images/outfits/outfit-rose-back.png` |
+| imagefondblancderrierenoir.avif | `public/images/products/jacket/jacket-black-back.avif` |
+| imagefondblancvestedevantnoir.avif | `public/images/products/jacket/jacket-black-front.avif` |
+| imagefondblancvestederriererose.avif | `public/images/products/jacket/jacket-rose-back.avif` |
+| imagefondblancvestedevantrose.avif | `public/images/products/jacket/jacket-rose-front.avif` |
 
-Pour ajouter plus d'images a un coloris, ajoutez les fichiers (5.jpg, 6.jpg...) et mettez a jour le tableau `images` dans `src/data/products.ts`.
+Les images sont référencées dans `src/data/products.ts` et dans les composants de sections.
+Une fois copiées, relancez `npm run dev` — aucune modification de code nécessaire.
 
 ---
 
 ## Modifier les textes
 
-- **Textes produits** : `src/data/products.ts` — noms, descriptions, features, prix, materiaux
-- **Textes page d'accueil** : chaque section dans `src/components/sections/`
-- **Nom de marque** : chercher "ELUA" dans le projet
-
----
+- **Textes produits** : `src/data/products.ts`
+- **Textes homepage** : chaque section dans `src/components/sections/`
+- **Nom de marque** : chercher "ÉLUA" dans le projet
 
 ## Modifier les coloris
 
-Dans `src/data/products.ts`, chaque produit a un tableau `colors` :
-
-```ts
-colors: [
-  {
-    id: "black",
-    name: "Noir Absolu",
-    hex: "#0A0A0A",
-    images: ["/products/jacket/black/1.jpg", ...]
-  },
-  {
-    id: "pink",
-    name: "Rose Poudre",
-    hex: "#D4A0A0",
-    images: ["/products/jacket/pink/1.jpg", ...]
-  }
-]
-```
-
-Pour ajouter un coloris, ajoutez un objet au tableau et creez le dossier d'images correspondant.
+Dans `src/data/products.ts`, chaque produit a un tableau `colors` avec id, name, hex et images.
+Pour ajouter un coloris, ajoutez un objet au tableau et créez les images correspondantes.
 
 ---
 
-## Deploiement sur serveur Linux
+## Deploiement
 
-### Option 1 : Node.js direct
+### Node.js + PM2
 
 ```bash
-# Sur le serveur
-git clone <repo-url> elua-site
-cd elua-site
 npm install --production
 npm run build
-npm run start -- -p 3000
+npx pm2 start npm --name "elua" -- start -- -p 3000
 ```
 
-Pour lancer en arriere-plan avec PM2 :
-
-```bash
-npm install -g pm2
-pm2 start npm --name "elua" -- start -- -p 3000
-pm2 save
-pm2 startup
-```
-
-### Option 2 : Docker
+### Docker (ajoutez `output: "standalone"` dans next.config.ts)
 
 ```dockerfile
 FROM node:20-alpine AS builder
@@ -143,7 +121,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM node:20-alpine AS runner
+FROM node:20-alpine
 WORKDIR /app
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
@@ -152,36 +130,25 @@ EXPOSE 3000
 CMD ["node", "server.js"]
 ```
 
-Pour le mode standalone, ajoutez dans `next.config.ts` :
-
-```ts
-const nextConfig = { output: "standalone" };
-```
-
-### Option 3 : Vercel
+### Vercel
 
 ```bash
-npm i -g vercel
-vercel
+npx vercel
 ```
 
 ---
 
-## Stack technique
+## Stack
 
-- **Next.js 16** (App Router)
-- **TypeScript**
-- **Tailwind CSS v4**
-- **Framer Motion** — animations, transitions, scroll-based effects
-- **GSAP** — disponible si necessaire pour animations complexes
-- **Lenis** — smooth scroll
-
----
+- Next.js 16 (App Router) + TypeScript
+- Tailwind CSS v4
+- Framer Motion (animations, transitions, scroll effects)
+- Lenis (smooth scroll)
 
 ## Pages
 
-| Page | URL | Description |
-|------|-----|-------------|
-| Accueil | `/` | Hero, intro, collection, manifeste, features, color story |
-| Veste | `/product/jacket` | Page produit La Veste Studio |
-| Pantalon | `/product/pants` | Page produit Le Pantalon Flow |
+| Page | URL |
+|---|---|
+| Accueil | `/` |
+| La Veste Studio | `/product/jacket` |
+| Le Pantalon Flow | `/product/pants` |

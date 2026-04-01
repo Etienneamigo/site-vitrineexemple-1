@@ -9,6 +9,11 @@ const navLinks = [
   { label: "Le Pantalon", href: "/product/pants" },
 ];
 
+const mobileLinks = [
+  { label: "Accueil", href: "/" },
+  ...navLinks,
+];
+
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Navigation() {
@@ -42,14 +47,14 @@ export default function Navigation() {
         transition={{ duration: 0.8, ease }}
         className={`fixed top-0 left-0 w-full z-50 h-20 flex items-center transition-all duration-700 ${
           scrolled
-            ? "bg-brand-black/80 backdrop-blur-md border-b border-white/5"
+            ? "glass border-b border-brand-sand/30"
             : "bg-transparent"
         }`}
       >
         <div className="w-full max-w-[1440px] mx-auto px-6 md:px-10 flex items-center justify-between">
           <Link
             href="/"
-            className="font-display text-xl md:text-2xl tracking-[0.3em] uppercase text-brand-white hover:text-brand-rose transition-colors duration-500"
+            className="font-display text-xl md:text-2xl tracking-[0.3em] uppercase text-brand-ink transition-colors duration-500"
           >
             ÉLUA
           </Link>
@@ -59,7 +64,7 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group relative font-body text-sm uppercase tracking-[0.15em] text-brand-silver hover:text-brand-white transition-colors duration-500"
+                className="group relative font-body text-xs uppercase tracking-widest text-brand-stone hover:text-brand-rose transition-colors duration-500"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 h-px w-0 bg-brand-rose transition-all duration-500 group-hover:w-full" />
@@ -75,25 +80,25 @@ export default function Navigation() {
             <motion.span
               animate={
                 menuOpen
-                  ? { rotate: 45, y: 8, backgroundColor: "#FAFAFA" }
-                  : { rotate: 0, y: 0, backgroundColor: "#FAFAFA" }
+                  ? { rotate: 45, y: 8, backgroundColor: "#1A1715" }
+                  : { rotate: 0, y: 0, backgroundColor: "#1A1715" }
               }
               transition={{ duration: 0.4, ease }}
-              className="block w-6 h-px bg-brand-white origin-center"
+              className="block w-6 h-px bg-brand-ink origin-center"
             />
             <motion.span
               animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
               transition={{ duration: 0.3, ease }}
-              className="block w-6 h-px bg-brand-white"
+              className="block w-6 h-px bg-brand-ink"
             />
             <motion.span
               animate={
                 menuOpen
-                  ? { rotate: -45, y: -8, backgroundColor: "#FAFAFA" }
-                  : { rotate: 0, y: 0, backgroundColor: "#FAFAFA" }
+                  ? { rotate: -45, y: -8, backgroundColor: "#1A1715" }
+                  : { rotate: 0, y: 0, backgroundColor: "#1A1715" }
               }
               transition={{ duration: 0.4, ease }}
-              className="block w-6 h-px bg-brand-white origin-center"
+              className="block w-6 h-px bg-brand-ink origin-center"
             />
           </button>
         </div>
@@ -105,10 +110,10 @@ export default function Navigation() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.5, ease } }}
             exit={{ opacity: 0, transition: { duration: 0.4, delay: 0.2, ease } }}
-            className="fixed inset-0 z-[100] bg-brand-black flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[100] bg-brand-snow flex flex-col items-center justify-center"
           >
             <nav className="flex flex-col items-center gap-8">
-              {[{ label: "Accueil", href: "/" }, ...navLinks].map((link, i) => (
+              {mobileLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
                   initial={{ opacity: 0, y: 40 }}
@@ -126,7 +131,7 @@ export default function Navigation() {
                   <Link
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="font-display text-4xl md:text-5xl text-brand-white hover:text-brand-rose transition-colors duration-500"
+                    className="font-display text-4xl md:text-5xl text-brand-ink hover:text-brand-rose transition-colors duration-500"
                   >
                     {link.label}
                   </Link>
@@ -138,7 +143,7 @@ export default function Navigation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.8, ease } }}
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
-              className="absolute bottom-16 font-body text-sm tracking-[0.2em] uppercase text-brand-muted"
+              className="absolute bottom-16 font-body text-sm tracking-[0.2em] uppercase text-brand-taupe"
             >
               Movement Redefined
             </motion.p>

@@ -33,7 +33,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="min-h-screen bg-brand-black text-brand-white antialiased" style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif" }}>
+      <body
+        className="min-h-screen bg-brand-snow text-brand-ink antialiased"
+        style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif" }}
+      >
         <SmoothScroll>
           <div className="noise" aria-hidden="true" />
           <Navigation />

@@ -5,45 +5,43 @@ import FadeIn from "@/components/ui/FadeIn";
 
 export default function IntroSection() {
   return (
-    <section className="relative bg-brand-black py-32 md:py-48 px-8 md:px-16 lg:px-24">
-      {/* Section label */}
-      <FadeIn delay={0} direction="up" distance={20}>
-        <p className="font-body text-xs uppercase tracking-[0.3em] text-brand-rose mb-12">
+    <section className="relative bg-brand-snow py-32 md:py-48 px-8 md:px-16 lg:px-24">
+      <FadeIn delay={0} direction="up" distance={15}>
+        <p className="text-xs tracking-[0.3em] uppercase text-brand-rose mb-10 font-body">
           01 — Philosophy
         </p>
       </FadeIn>
 
-      {/* Large editorial text */}
-      <div className="max-w-4xl mb-20 md:mb-28">
-        <RevealText
-          as="p"
-          className="font-display text-brand-white text-2xl md:text-4xl lg:text-5xl leading-[1.2] tracking-[-0.01em]"
-          delay={0.1}
-        >
-          We believe in the power of movement. In the grace of a perfectly balanced silhouette. In clothing that moves with you, not against you.
-        </RevealText>
-      </div>
+      <RevealText
+        as="h2"
+        className="font-display text-3xl md:text-5xl lg:text-6xl text-brand-ink max-w-5xl leading-[1.1]"
+        delay={0.1}
+      >
+        We believe in the poetry of movement. In clothing that traces the body like light traces a silhouette.
+      </RevealText>
 
-      {/* Two columns */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-4xl">
-        <FadeIn delay={0.3} direction="up" distance={30}>
-          <p className="font-body text-sm md:text-base leading-relaxed text-brand-silver">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-16 md:mt-24 max-w-5xl">
+        <FadeIn delay={0.2} direction="up" distance={30}>
+          <p className="text-brand-stone text-base leading-[1.8] font-body">
             Born from the fusion of haute couture precision and athletic
-            performance, ÉLUA redefines what activewear can be.
+            performance, ÉLUA redefines what activewear can be. Each piece is a
+            dialogue between art and engineering — where the discipline of
+            construction meets the freedom of motion.
           </p>
         </FadeIn>
-        <FadeIn delay={0.5} direction="up" distance={30}>
-          <p className="font-body text-sm md:text-base leading-relaxed text-brand-silver">
-            Every stitch, every seam, every curve is designed to enhance your
-            natural movement. This is not just clothing — it is an extension of
-            your body.
+
+        <FadeIn delay={0.35} direction="up" distance={30}>
+          <p className="text-brand-stone text-base leading-[1.8] font-body">
+            Every stitch, every seam, every curve has been considered, refined,
+            and reconsidered. This is not just clothing — it is an extension of
+            your body&apos;s natural grace. A second skin that understands the
+            language of movement.
           </p>
         </FadeIn>
       </div>
 
-      {/* Divider */}
-      <FadeIn delay={0.7} direction="none" duration={1.2}>
-        <div className="mt-24 md:mt-32 h-px w-full bg-gradient-to-r from-transparent via-brand-rose/30 to-transparent" />
+      <FadeIn delay={0.5} direction="none">
+        <div className="divider mt-20" />
       </FadeIn>
     </section>
   );

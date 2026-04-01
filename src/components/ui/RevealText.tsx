@@ -3,6 +3,8 @@
 import { useRef, ElementType } from "react";
 import { motion, useInView } from "framer-motion";
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 interface RevealTextProps {
   children: string;
   className?: string;
@@ -31,12 +33,12 @@ export default function RevealText({
         >
           <motion.span
             className="inline-block"
-            initial={{ y: "100%" }}
-            animate={isInView ? { y: "0%" } : { y: "100%" }}
+            initial={{ y: "110%" }}
+            animate={isInView ? { y: "0%" } : { y: "110%" }}
             transition={{
-              duration: 0.8,
-              delay: delay + i * 0.04,
-              ease: [0.16, 1, 0.3, 1],
+              duration: 0.9,
+              delay: delay + i * 0.035,
+              ease,
             }}
           >
             {word}
